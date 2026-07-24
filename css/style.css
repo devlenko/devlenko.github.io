@@ -1,20 +1,22 @@
 ﻿/* ================================================================
    Design tokens
-   The palette is intentionally blue-led with a warm orange accent.
+   A dark, blue-led palette with orange reserved for small highlights.
    ================================================================ */
 :root {
-  --ink: #0b1120;
-  --ink-soft: #16223a;
-  --paper: #f8fbff;
-  --blue-900: #0b1f3a;
-  --blue-700: #075eb2;
-  --blue-500: #1597e5;
-  --blue-100: #e4f4ff;
-  --orange: #ff7a18;
-  --orange-light: #ffb15a;
-  --muted: #526278;
-  --line: #d4e1ee;
-  --white: #ffffff;
+  --ink: #07101e;
+  --ink-soft: #0d1b2e;
+  --paper: #091625;
+  --surface: #10243b;
+  --blue-900: #102f52;
+  --blue-700: #4cb9ff;
+  --blue-500: #74caff;
+  --blue-100: #dff3ff;
+  --purple: #9a7cff;
+  --orange: #ffb15a;
+  --orange-light: #ffd09c;
+  --muted: #b8c9dc;
+  --line: #2d4967;
+  --white: #f8fbff;
 }
 
 /* ================================================================
@@ -29,6 +31,7 @@ body {
   color: var(--ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 section {
@@ -49,6 +52,7 @@ section {
 }
 
 h1, h2, h3 {
+  color: var(--white);
   font-weight: 850;
   letter-spacing: -.045em;
   line-height: 1.06;
@@ -80,27 +84,36 @@ h3 {
    Navigation
    ================================================================ */
 .navbar {
-  background: rgba(248, 251, 255, .9);
+  background: rgba(7, 16, 30, .9);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(11, 17, 32, .08);
+  border-bottom: 1px solid rgba(116, 202, 255, .18);
+  --bs-navbar-brand-color: var(--white);
+  --bs-navbar-brand-hover-color: var(--blue-100);
+  --bs-navbar-color: var(--white);
+  --bs-navbar-hover-color: var(--blue-500);
+  --bs-navbar-toggler-icon-bg: none;
 }
 
 .navbar-brand {
+  color: var(--white);
   font-size: 1.45rem;
   font-weight: 900;
   letter-spacing: -.08em;
 }
 
 .navbar-brand span {
-  color: var(--orange);
+  color: var(--blue-500);
 }
 .nav-link {
+  color: var(--white);
   font-size: .9rem;
   font-weight: 700;
 }
 .nav-link:hover {
-  color: var(--blue-700);
+  color: var(--blue-500);
 }
+.navbar-toggler { border-color: rgba(116, 202, 255, .5); }
+.navbar-toggler-icon { filter: invert(1); }
 
 /* ================================================================
    Buttons and links
@@ -113,12 +126,14 @@ h3 {
 }
 
 .btn-primary {
-  background: var(--blue-700);
-  border-color: var(--blue-700);
+  background: var(--blue-500);
+  border-color: var(--blue-500);
+  color: var(--ink);
 }
 .btn-primary:hover {
-  background: var(--blue-900);
-  border-color: var(--blue-900);
+  background: var(--blue-100);
+  border-color: var(--blue-100);
+  color: var(--ink);
   transform: translateY(-2px);
 }
 .btn-accent {
@@ -133,13 +148,13 @@ h3 {
   transform: translateY(-2px);
 }
 .btn-outline-dark {
-  border-color: var(--blue-900);
-  color: var(--blue-900);
+  border-color: var(--blue-700);
+  color: var(--blue-100);
 }
 .btn-outline-dark:hover {
-  background: var(--blue-100);
-  border-color: var(--blue-500);
-  color: var(--blue-900);
+  background: var(--blue-900);
+  border-color: var(--blue-900);
+  color: var(--white);
   transform: translateY(-2px);
 }
 .text-link {
@@ -152,29 +167,79 @@ h3 {
    Hero
    ================================================================ */
 .hero {
-  background: linear-gradient(125deg, #f8fbff 0%, #dff3ff 55%, #fff1df 100%);
+  background: radial-gradient(circle at 72% 22%, #123b66 0%, transparent 27%), linear-gradient(135deg, #07101e 0%, #0b1b31 100%);
   overflow: hidden;
+  padding-top: 4.75rem;
   position: relative;
 }
-.orb {
-  border-radius: 50%;
-  filter: blur(2px);
-  opacity: .58;
+.hero .min-vh-100 {
+  min-height: calc(100vh - 4.75rem) !important;
+}
+
+.hero .container {
+  z-index: 1;
+}
+
+/* The shapes create depth without competing with the hero content. */
+.geometric-background {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
   position: absolute;
 }
-.orb-one {
-  background: var(--blue-500);
-  height: 22rem;
-  right: -7rem;
-  top: 9rem;
-  width: 22rem;
+
+.shape {
+  display: block;
+  position: absolute;
 }
-.orb-two {
-  background: var(--orange);
-  bottom: 2rem;
-  height: 14rem;
-  left: -7rem;
-  width: 14rem;
+
+.shape-circle {
+  border: 1px solid rgba(116, 202, 255, .3);
+  border-radius: 50%;
+  height: 24rem;
+  right: -9rem;
+  top: 11%;
+  width: 24rem;
+  box-shadow: 0 0 36px rgba(76, 185, 255, .13);
+}
+
+.shape-square {
+  border: 1px solid rgba(154, 124, 255, .4);
+  height: 8rem;
+  left: 5%;
+  top: 20%;
+  transform: rotate(22deg);
+  width: 8rem;
+  box-shadow: 0 0 32px rgba(154, 124, 255, .12);
+}
+
+.shape-triangle {
+  border-bottom: 0;
+  border-left: 4rem solid transparent;
+  border-right: 4rem solid transparent;
+  border-top: 7rem solid rgba(255, 177, 90, .2);
+  bottom: 9%;
+  left: 39%;
+}
+
+.shape-dot-grid {
+  background-image: radial-gradient(rgba(116, 202, 255, .62) 1px, transparent 1px);
+  background-size: 16px 16px;
+  height: 11rem;
+  opacity: .68;
+  right: 5%;
+  top: 51%;
+  width: 11rem;
+}
+
+.shape-plus {
+  color: rgba(255, 177, 90, .58);
+  font-size: 4rem;
+  font-weight: 200;
+  filter: drop-shadow(0 0 9px rgba(255, 177, 90, .34));
+  line-height: 1;
+  right: 6%;
+  top: 76%;
 }
 .hero-copy {
   color: var(--muted);
@@ -183,7 +248,7 @@ h3 {
   max-width: 650px;
 }
 .hero h1 span {
-  color: var(--blue-700);
+  color: var(--blue-500);
 }
 .contact-placeholder {
   color: var(--muted);
@@ -197,9 +262,9 @@ h3 {
   position: relative;
 }
 .profile-image {
-  border: 10px solid var(--white);
+  border: 10px solid var(--surface);
   border-radius: 50%;
-  box-shadow: 18px 18px 0 var(--blue-900);
+  box-shadow: 18px 18px 0 var(--blue-700);
   height: auto;
   position: relative;
   width: min(78vw, 390px);
@@ -213,10 +278,11 @@ h3 {
   position: absolute;
 }
 .status-pill {
-  background: var(--white);
+  background: var(--surface);
   border-radius: 999px;
   bottom: 1.2rem;
-  box-shadow: 0 8px 25px rgba(11, 17, 32, .16);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, .25);
+  color: var(--white);
   font-size: .8rem;
   font-weight: 800;
   left: -1rem;
@@ -236,11 +302,199 @@ h3 {
 /* ================================================================
    Content sections and cards
    ================================================================ */
+/* Each section receives low-priority geometry behind its readable content. */
+.section,
+.contact-section {
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+}
+
+.section > .container,
+.contact-section > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.section::before,
+.section::after,
+.contact-section::before,
+.contact-section::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+/* Shape clusters add depth at section edges without competing with content. */
+.section-geometry {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.geo {
+  display: block;
+  position: absolute;
+}
+
+.geo-ring {
+  border: 2px solid rgba(116, 202, 255, .3);
+  border-radius: 50%;
+  box-shadow: 0 0 28px rgba(76, 185, 255, .13);
+  height: 9rem;
+  width: 9rem;
+}
+
+.geo-grid {
+  background-image: radial-gradient(rgba(154, 124, 255, .48) 1px, transparent 1px);
+  background-size: 14px 14px;
+  height: 7rem;
+  opacity: .68;
+  width: 7rem;
+}
+
+.geo-plus {
+  color: rgba(255, 177, 90, .62);
+  filter: drop-shadow(0 0 8px rgba(255, 177, 90, .28));
+  font-size: 3.2rem;
+  font-weight: 200;
+  line-height: 1;
+}
+
+.geo-square {
+  border: 2px solid rgba(154, 124, 255, .36);
+  box-shadow: 0 0 25px rgba(154, 124, 255, .1);
+  height: 7rem;
+  transform: rotate(24deg);
+  width: 7rem;
+}
+
+.geo-disc {
+  background: rgba(76, 185, 255, .12);
+  border: 1px solid rgba(116, 202, 255, .42);
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(76, 185, 255, .13);
+  height: 5rem;
+  width: 5rem;
+}
+
+.geo-triangle {
+  border-bottom: 0;
+  border-left: 3.5rem solid transparent;
+  border-right: 3.5rem solid transparent;
+  border-top: 6rem solid rgba(255, 177, 90, .18);
+  height: 0;
+  width: 0;
+}
+
+/* Each section places its cluster in uncovered edge space. */
+#about .geo-ring { right: 5%; top: 12%; }
+#about .geo-grid { bottom: 12%; right: 12%; }
+#about .geo-plus { bottom: 10%; left: 4%; }
+#skills .geo-square { bottom: 9%; left: 4%; }
+#skills .geo-grid { bottom: 14%; right: 5%; }
+#skills .geo-disc { right: 17%; top: 13%; }
+#projects .geo-ring { bottom: 8%; right: 4%; }
+#projects .geo-triangle { left: 4%; top: 12%; }
+#projects .geo-plus { bottom: 9%; left: 13%; }
+#journey .geo-ring { right: 2%; top: 5%; }
+#journey .geo-grid { bottom: 9%; left: 3%; }
+#journey .geo-square { bottom: 7%; right: 3%; }
+#contact .geo-ring { left: 4%; top: 13%; }
+#contact .geo-grid { bottom: 12%; right: 5%; }
+#contact .geo-triangle { bottom: 10%; left: 12%; }
+
+/* Default treatment: an orange ring and a dotted matrix. */
+.section::before {
+  border: 1px solid color-mix(in srgb, var(--orange) 22%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 42px color-mix(in srgb, var(--orange-light) 10%, transparent); 
+  height: 15rem;
+  right: -7rem;
+  top: 10%;
+  width: 15rem;
+}
+
+.section::after {
+  background-image: radial-gradient(rgba(116, 202, 255, .35) 1px, transparent 1px);
+  background-size: 15px 15px;
+  bottom: 8%;
+  height: 7rem;
+  left: 3%;
+  opacity: .55;
+  width: 7rem;
+}
+
+/* The skills section uses a purple square and orange plus for variation. */
+.section-tint::before {
+  border-color: rgba(154, 124, 255, .38);
+  border-radius: 0;
+  height: 10rem;
+  right: 6%;
+  top: 14%;
+  transform: rotate(28deg);
+  width: 10rem;
+}
+
+.section-tint::after {
+  background: none;
+  color: rgba(255, 177, 90, .5);
+  content: "+";
+  filter: drop-shadow(0 0 8px rgba(255, 177, 90, .25));
+  font-size: 3.5rem;
+  font-weight: 200;
+  height: auto;
+  left: 8%;
+  top: 13%;
+  width: auto;
+}
+
+/* The journey section uses a circle and purple dot field. */
+.section-dark::before {
+  width: 8rem;
+  height: 8rem;
+  background-color: rgba(255, 177, 90, .14);
+  top: auto;
+  right: 35%;
+  bottom: 10%;
+}
+
+.section-dark::after {
+  background-image: radial-gradient(rgba(154, 124, 255, .46) 1px, transparent 1px);
+  bottom: auto;
+  left: 5%;
+  opacity: .6;
+  top: 12%;
+}
+
+/* Projects invert the default placement to avoid repeating the same layout. */
+#projects::before {
+  left: -7rem;
+  right: auto;
+  top: 18%;
+}
+
+#projects::after {
+  background: none;
+  color: rgba(255, 177, 90, .48);
+  content: "+";
+  font-size: 3rem;
+  font-weight: 200;
+  height: auto;
+  left: auto;
+  right: 8%;
+  top: 68%;
+  width: auto;
+}
+
 .section {
   padding: 7rem 0;
 }
 .section-tint {
-  background: var(--blue-100);
+  background: #0b1c31;
 }
 .section-heading {
   margin-bottom: 3rem;
@@ -253,7 +507,7 @@ h3 {
 }
 
 .stat-card {
-  background: var(--white);
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 1rem;
   height: 100%;
@@ -266,12 +520,13 @@ h3 {
   letter-spacing: -.08em;
 }
 .stat-card span {
+  color: var(--white);
   font-size: .86rem;
   font-weight: 700;
 }
 
 .skill-card, .project-card {
-  background: var(--white);
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 1rem;
   height: 100%;
@@ -279,7 +534,7 @@ h3 {
   transition: box-shadow .25s ease, transform .25s ease;
 }
 .skill-card:hover, .project-card:hover {
-  box-shadow: 0 16px 30px rgba(7, 94, 178, .13);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, .28);
   transform: translateY(-7px);
 }
 .skill-number {
@@ -315,15 +570,19 @@ h3 {
   font-size: .92rem;
   padding-left: 1.1rem;
 }
-.project-card li + li {
+.project-card li {
+  color: var(--muted);
   margin-top: .55rem;
+}
+.project-card li:first-of-type {
+  margin-top: 1rem;
 }
 
 /* ================================================================
    Dark journey and contact panels
    ================================================================ */
 .section-dark, .contact-section {
-  background: var(--ink);
+  background: #060d18;
   color: var(--white);
 }
 .section-dark .eyebrow, .contact-section .eyebrow {
@@ -364,7 +623,7 @@ h3 {
 }
 
 .awards-card {
-  background: var(--ink-soft);
+  background: var(--surface);
   border: 1px solid #263955;
   border-radius: 1rem;
   height: 100%;
@@ -390,8 +649,27 @@ h3 {
 }
 
 .contact-section {
-  background: linear-gradient(115deg, var(--ink) 0%, var(--blue-900) 100%);
+  background: linear-gradient(115deg, #060d18 0%, #0b2440 100%);
   padding: 7rem 0;
+}
+
+.contact-section::before {
+  border: 1px solid rgba(116, 202, 255, .3);
+  border-radius: 50%;
+  box-shadow: 0 0 45px rgba(76, 185, 255, .12);
+  height: 20rem;
+  left: -9rem;
+  top: -7rem;
+  width: 20rem;
+}
+
+.contact-section::after {
+  background-image: radial-gradient(rgba(255, 177, 90, .44) 1px, transparent 1px);
+  background-size: 15px 15px;
+  bottom: 10%;
+  height: 8rem;
+  right: 6%;
+  width: 8rem;
 }
 .contact-section h2 {
   font-size: clamp(2.5rem, 6vw, 5rem);
@@ -405,6 +683,7 @@ h3 {
 }
 .btn-light:hover {
   background: var(--orange-light);
+  border-color: var(--orange-light);
   transform: translateY(-2px);
 }
 .btn-outline-light:hover {
@@ -420,10 +699,10 @@ h3 {
    footer's right-aligned Back to top link.
    ================================================================ */
 .floating-cta {
-  background: var(--orange);
+  background: var(--blue-500);
   border-radius: 999px;
   bottom: 1.2rem;
-  box-shadow: 0 8px 24px rgba(255, 122, 24, .32);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .32);
   color: var(--ink);
   font-weight: 800;
   left: 1.2rem;
@@ -433,7 +712,7 @@ h3 {
   z-index: 10;
 }
 .floating-cta:hover {
-  background: var(--blue-500);
+  background: var(--blue-100);
   color: var(--ink);
 }
 .floating-cta span {
@@ -446,7 +725,7 @@ h3 {
 }
 
 footer {
-  background: #070c16;
+  background: #030811;
   color: #b7c8db;
   font-size: .85rem;
   padding: 1.35rem 0;
@@ -525,6 +804,16 @@ footer a {
 
   .profile-image {
     box-shadow: 10px 10px 0 var(--blue-900);
+    width: min(72vw, 270px);
+  }
+
+  /* Keep the decorative portrait ring inside the narrow mobile viewport. */
+  .portrait-wrap {
+    max-width: calc(100vw - 2rem);
+  }
+
+  .portrait-ring {
+    inset: -10px;
   }
 
   .status-pill {
@@ -535,5 +824,12 @@ footer a {
     align-items: flex-start !important;
     flex-direction: column;
   }
+
+  /* Reduce the largest clusters without removing the geometric language. */
+  .shape-circle { height: 16rem; right: -8rem; width: 16rem; }
+  .shape-dot-grid { height: 7rem; width: 7rem; }
+  .geo-ring { height: 6rem; width: 6rem; }
+  .geo-square { height: 5rem; width: 5rem; }
+  .geo-grid { height: 5rem; width: 5rem; }
 }
 

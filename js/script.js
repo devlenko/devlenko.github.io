@@ -1,8 +1,13 @@
-// Enhances the page without making its core content dependent on JavaScript.
+/**
+ * Progressive enhancements for the portfolio.
+ * The page remains readable and navigable without JavaScript; this file only
+ * adds small interaction and motion conveniences once the DOM is available.
+ */
 document.addEventListener('DOMContentLoaded', () => {
+  // Keep the copyright year current without needing a manual annual edit.
   document.querySelector('#year').textContent = new Date().getFullYear();
 
-  // Close the mobile navigation after an in-page link is selected.
+  // Collapse Bootstrap's mobile navigation after a section link is selected.
   document.querySelectorAll('#siteNav .nav-link').forEach((link) => {
     link.addEventListener('click', () => {
       const menu = document.querySelector('#siteNav');
@@ -11,7 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Reveal content as it enters the viewport while respecting reduced-motion preferences.
+  // Reveal sections only when motion is allowed. The fallback makes every
+  // section visible immediately in older browsers and reduced-motion mode.
   const items = document.querySelectorAll('.reveal');
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
@@ -20,13 +26,24 @@ document.addEventListener('DOMContentLoaded', () => {
     items.forEach((item) => observer.observe(item));
   } else items.forEach((item) => item.classList.add('is-visible'));
 
-  // Temporarily hide the fixed control near the footer so footer links remain clear.
+  // Show the persistent email link only after the hero has scrolled away,
+  // then hide it again near the footer to prevent any overlapping controls.
   const floatingCta = document.querySelector('.floating-cta');
   const footer = document.querySelector('footer');
-  if (floatingCta && footer && 'IntersectionObserver' in window) {
-    const footerObserver = new IntersectionObserver(([entry]) => {
-      floatingCta.classList.toggle('is-hidden', entry.isIntersecting);
-    }, { threshold: 0.15 });
-    footerObserver.observe(footer);
+  const hero = document.querySelector('.hero');
+  if (floatingCta && footer && hero && 'IntersectionObserver' in window) {
+    let heroVisible = true;
+    let footerVisible = false;
+    const updateFloatingCta = () => floatingCta.classList.toggle('is-hidden', heroVisible || footerVisible);
+
+    new IntersectionObserver(([entry]) => {
+      heroVisible = entry.isIntersecting;
+      updateFloatingCta();
+    }, { threshold: 0.08 }).observe(hero);
+
+    new IntersectionObserver(([entry]) => {
+      footerVisible = entry.isIntersecting;
+      updateFloatingCta();
+    }, { threshold: 0.15 }).observe(footer);
   }
 });
